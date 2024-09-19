@@ -10,4 +10,5 @@ Route::get('/user', function (Request $request) {
 Route::get('/test',function(){
     return response(['mesage' => 'Api is working'],200);
 });
-Route::post('register',[AuthenticationController::class,'register']);  
+Route::post('register',[AuthenticationController::class,'register']);
+Route::post('login',[AuthenticationController::class,'login']);
