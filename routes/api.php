@@ -12,5 +12,6 @@ Route::get('/test',function(){
     return response(['mesage' => 'Api is working'],200);
 });
 Route::post('feed/store',[FeedController::class,'store'])->middleware('auth:sanctum');
+Route::post('feed/like/{feed_id}',[FeedController::class,'likePost'])->middleware('auth:sanctum');
 Route::post('register',[AuthenticationController::class,'register']);
 Route::post('login',[AuthenticationController::class,'login']);

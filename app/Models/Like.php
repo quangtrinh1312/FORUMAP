@@ -5,21 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Feed extends Model
+class Like extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
-        'contents'
+        'feed_id',
+        'user_id'
     ];
-    public function user(): BelongsTo
+    public function user():BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    public function likes():HasMany
+    public function feed():BelongsTo
     {
-        return $this->hasMany(Like::class);
+        return $this->belongsTo(Feed::class);
     }
 }
