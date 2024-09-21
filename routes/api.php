@@ -11,7 +11,10 @@ Route::get('/user', function (Request $request) {
 Route::get('/test',function(){
     return response(['mesage' => 'Api is working'],200);
 });
+Route::get('feeds',[FeedController::class,'index'])->middleware('auth:sanctum');
 Route::post('feed/store',[FeedController::class,'store'])->middleware('auth:sanctum');
 Route::post('feed/like/{feed_id}',[FeedController::class,'likePost'])->middleware('auth:sanctum');
+Route::post('feed/comment/{feed_id}',[FeedController::class,'comment'])->middleware('auth:sanctum');
+Route::get('feed/comments/{feed_id}',[FeedController::class,'getComments'])->middleware('auth:sanctum');
 Route::post('register',[AuthenticationController::class,'register']);
 Route::post('login',[AuthenticationController::class,'login']);

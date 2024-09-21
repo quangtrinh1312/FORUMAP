@@ -8,9 +8,21 @@ use Illuminate\Http\Request;
 use App\Models\Feed;
 use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
-
+use PhpParser\Node\Expr\FuncCall;
+use App\Models\Comment;
+use App\Http\Requests\CommentRequest;
 class FeedController extends Controller
 {
+    public function index()
+    {
+        $feeds = Feed::with('user')->latest()->get();
+        return response(
+            [
+                'feeds'=>$feeds
+            ],
+            200
+        );
+    }
     public function store(PostRequest $request)
     {
         $request->validated();
@@ -80,5 +92,30 @@ class FeedController extends Controller
                 200
             ); 
         }
+    }
+    public Function comment($feed_id,CommentRequest $request)
+    {
+        $request->validated();
+        $comment = Comment::create(
+            [
+                'user_id'=>auth()->id(),
+                'feed_id'=>$feed_id,
+                'body'=> $request->body
+            ]
+        );
+        return response([
+            'message'=>'Success'
+            ],
+            201
+        );
+    }
+    public function getComments($feed_id)
+    {
+            $comments = Comment::with('feed','user')->whereFeedId($feed_id)->latest()->get();
+            return response([
+                'comment'=>$comments
+                ],
+                200
+            );
     }
 }
